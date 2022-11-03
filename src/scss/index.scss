@@ -1,4 +1,10 @@
-// test 
-body {
-    background-color: black;
-}
+//|||||||||||||||||||||| ABSTRACT ||||||||||||||||||||||*/
+@import './abstracts/variables';
+@import './abstracts/functions';
+
+/*|||||||||||||||||||||| BASE ||||||||||||||||||||||*/
+@import './base/typography';
+@import './base/reset';
+
+/*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/
+@import './layouts/header';

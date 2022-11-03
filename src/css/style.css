@@ -1,5 +1,43 @@
+/*====================== variables ======================*/
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
+:root {
+  --clr-red: #D04F4F;
+  --res-width: calc(100vw/1440);
+  --res-height: calc(100vh/1024);
+  --ratio-size: 1;
+  --ratio-width: 1;
+}
+
+/*|||||||||||||||||||||| BASE ||||||||||||||||||||||*/
+/*====================== typography ======================*/ /*====================== reset ======================*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: black;
+  padding: calc(var(--res-width) * 25 * var(--ratio-width)) calc(var(--res-width) * 100 * var(--ratio-width));
+  font-family: "DM Sans";
+}
+
+/*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/
+/*====================== header ======================*/
+.header-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(var(--res-width) * 268 * var(--ratio-width));
+  margin: calc(var(--res-width) * 17 * var(--ratio-width)) auto;
+}
+.header-title h1 {
+  color: var(--clr-red);
+  font-size: calc(var(--res-width) * 36 * var(--ratio-size));
+  font-weight: 700;
+}
+
+.logo {
+  width: calc(var(--res-width) * 50.48 * var(--ratio-width));
 }
 
 /*# sourceMappingURL=style.css.map */

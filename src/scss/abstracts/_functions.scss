@@ -1,0 +1,13 @@
+//====================== functions ======================//
+@function width($width) {
+    $newWidth: calc($res-width * $width * $ratio-width);
+    @return $newWidth;
+}
+@function height($height) {
+    $newHeight: calc($res-height * $height);
+    @return $newHeight;
+}
+@function size($size) {
+    $newSize: calc($res-width * $size * $ratio-size);
+    @return $newSize;
+}
