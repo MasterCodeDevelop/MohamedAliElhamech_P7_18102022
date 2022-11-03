@@ -1,7 +1,9 @@
 /*====================== variables ======================*/
 :root {
     --clr-red: #D04F4F;
-
+    --clr-grey: #e7e7e7;
+    --clr-black: #000;
+    
     --res-width: calc(100vw/1440);
     --res-height: calc(100vh/1024);
     --ratio-size: 1;
@@ -10,6 +12,8 @@
 
 //####### Colors #######
 $clr-red: var(--clr-red);
+$clr-grey: var(--clr-grey);
+$clr-black: var(--clr-black);
 
 //####### responsive #######
 $res-height : var(--res-height);

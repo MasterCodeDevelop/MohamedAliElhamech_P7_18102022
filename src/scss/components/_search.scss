@@ -1,0 +1,37 @@
+/*====================== search ======================*/
+.search-bar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+	background-color: $clr-grey;
+    gap: 5px;
+	border-radius: 5px;
+	font-family: 'Lato';
+    padding: width(24);
+    height: width(69);
+
+}
+.search {
+    &-label {
+        display: contents;
+        cursor: pointer;
+        &__magnifying-glass {
+            position: relative;
+            width: width(32);
+            width: height(32);
+        }
+    }
+    &-input {
+        font-size: size(18);
+        font-family: 'Lato';
+        font-weight: 400;
+        color: $clr-black;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        width: 100%;
+        &::placeholder {
+            opacity: 0.25;
+        }
+    }
+}
