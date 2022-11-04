@@ -9,6 +9,7 @@
 	font-family: 'Lato';
     padding: width(24);
     height: width(69);
+    margin-bottom: width(20);
 
 }
 .search {
@@ -16,9 +17,9 @@
         display: contents;
         cursor: pointer;
         &__magnifying-glass {
-            position: relative;
+            position: absolute;
             width: width(32);
-            width: height(32);
+            height: width(32);
         }
     }
     &-input {
@@ -30,6 +31,7 @@
         outline: none;
         border: none;
         width: 100%;
+        height: width(22);
         &::placeholder {
             opacity: 0.25;
         }

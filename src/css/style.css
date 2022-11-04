@@ -39,6 +39,7 @@ body {
   font-family: "Lato";
   padding: calc(var(--res-width) * 24 * var(--ratio-width));
   height: calc(var(--res-width) * 69 * var(--ratio-width));
+  margin-bottom: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 
 .search-label {
@@ -46,9 +47,9 @@ body {
   cursor: pointer;
 }
 .search-label__magnifying-glass {
-  position: relative;
+  position: absolute;
   width: calc(var(--res-width) * 32 * var(--ratio-width));
-  width: calc(var(--res-height) * 32);
+  height: calc(var(--res-width) * 32 * var(--ratio-width));
 }
 .search-input {
   font-size: calc(var(--res-width) * 18 * var(--ratio-size));
@@ -59,6 +60,7 @@ body {
   outline: none;
   border: none;
   width: 100%;
+  height: calc(var(--res-width) * 22 * var(--ratio-width));
 }
 .search-input::placeholder {
   opacity: 0.25;
@@ -69,6 +71,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: calc(var(--res-width) * 15 * var(--ratio-width)) calc(var(--res-width) * 15 * var(--ratio-width));
+  margin-top: calc(var(--res-width) * 5 * var(--ratio-width));
   margin-bottom: calc(var(--res-width) * 15 * var(--ratio-width));
 }
 
