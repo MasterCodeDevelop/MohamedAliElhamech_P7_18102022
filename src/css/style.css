@@ -4,6 +4,10 @@
   --clr-red: #D04F4F;
   --clr-grey: #e7e7e7;
   --clr-black: #000;
+  --clr-white: #fff;
+  --clr-blue: #3282F7;
+  --clr-green: #68D9A4;
+  --clr-orangered: #ED6454;
   --res-width: calc(100vw/1440);
   --res-height: calc(100vh/1024);
   --ratio-size: 1;
@@ -58,6 +62,49 @@ body {
 }
 .search-input::placeholder {
   opacity: 0.25;
+}
+
+/*====================== tags ======================*/
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--res-width) * 15 * var(--ratio-width)) calc(var(--res-width) * 15 * var(--ratio-width));
+  margin-bottom: calc(var(--res-width) * 15 * var(--ratio-width));
+}
+
+.tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--res-width) * 13 * var(--ratio-width));
+  color: var(--clr-white);
+  font-family: "Lato";
+  font-weight: 700;
+  padding: calc(var(--res-width) * 8 * var(--ratio-width)) calc(var(--res-width) * 21 * var(--ratio-width));
+  border-radius: calc(var(--res-width) * 5 * var(--ratio-width));
+}
+.tag span {
+  font-size: calc(var(--res-width) * 14 * var(--ratio-size));
+  font-weight: 700;
+}
+.tag.ingredient {
+  background-color: var(--clr-blue);
+}
+.tag.appliance {
+  background-color: var(--clr-green);
+}
+.tag.ustensil {
+  background-color: var(--clr-orangered);
+}
+.tag-remove {
+  display: contents;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.tag-remove, .tag-remove__icon {
+  width: calc(var(--res-width) * 20 * var(--ratio-width));
+  height: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 
 /*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/

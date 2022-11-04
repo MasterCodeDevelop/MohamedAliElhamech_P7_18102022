@@ -1,0 +1,42 @@
+/*====================== tags ======================*/
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: width(15) width(15);
+    margin-bottom: width(15);
+}
+.tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: width(13);
+    color: $clr-white;
+    font-family: 'Lato';
+    font-weight: 700;
+    padding: width(8) width(21);
+    border-radius: width(5);
+    span {
+        font-size: size(14);
+        font-weight: 700;
+    }
+    &.ingredient {
+        background-color: $clr-blue;
+    }
+    &.appliance {
+        background-color: $clr-green;
+    }
+    &.ustensil {
+        background-color: $clr-orangered;
+    }
+    &-remove {
+        display: contents;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        &, &__icon {
+            width: width(20);
+            height: width(20);
+        }
+    }
+}

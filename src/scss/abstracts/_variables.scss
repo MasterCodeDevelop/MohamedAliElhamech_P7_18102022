@@ -3,6 +3,10 @@
     --clr-red: #D04F4F;
     --clr-grey: #e7e7e7;
     --clr-black: #000;
+    --clr-white: #fff;
+    --clr-blue: #3282F7;
+    --clr-green: #68D9A4;
+    --clr-orangered: #ED6454;
     
     --res-width: calc(100vw/1440);
     --res-height: calc(100vh/1024);
@@ -14,6 +18,11 @@
 $clr-red: var(--clr-red);
 $clr-grey: var(--clr-grey);
 $clr-black: var(--clr-black);
+$clr-white: var(--clr-white);
+$clr-blue: var(--clr-blue);
+$clr-green: var(--clr-green);
+$clr-orangered: var(--clr-orangered);
+
 
 //####### responsive #######
 $res-height : var(--res-height);
