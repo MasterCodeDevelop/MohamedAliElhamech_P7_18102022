@@ -10,19 +10,22 @@
 <body>
     <!--====================== HEADER ======================-->
     <header>
-        <!--==== HEADER-TITLE ====-->
+
+        <!--====================== HEADER-TITLE ======================-->
         <div class="header-title">
             <img class="logo" src="./src/svg/logo.svg" alt="Logo les petits plat">
             <h1>Les petits plats</h1>
         </div>
-        <!--==== SEARCH ====-->
+
+        <!--====================== SEARCH ======================-->
         <div class="search-bar">
             <label for="search" class="search-label">
                 <img class="search-label__magnifying-glass" src="./src/svg/magnifying-glass.svg" alt="magnifying-glass">
             </label>
             <input id="search" name="search" class="search-input" type="text" placeholder="Rechercher une recette">
         </div>
-        <!--==== TAGS ====-->
+
+        <!--====================== TAGS ======================-->
         <div id="tags" class="tags">
             <div class="tag ingredient">
                 <span>Coco</span>
@@ -30,6 +33,32 @@
                     <img src="./src/svg/close.svg" alt="close" class="tag-remove__icon">
                 </button>
             </div>
+        </div>
+
+        <!--====================== FILTERS ======================-->
+        <div id="filters" class="filters">
+            <nav class="filter ingredients">
+                <input class="filter-input"  placeholder="Rechercher un ingédient" name="ingredient" title="ingredient" id="ingredient">
+                <label class="filter-label" for="ingredient">
+                    <span>Ingredients</span>
+                    <img src="./src/svg/hat.svg" alt="hat toggle">
+                </label>
+            </nav>
+            <nav class="filter appliances">
+                <input class="filter-input"  placeholder="Rechercher un appareil" name="appliance" title="appliances" id="appliance">
+                <label class="filter-label" for="appliance">
+                    <span>Appareils</span>
+                    <img src="./src/svg/hat.svg" alt="hat toggle">
+                </label>
+            </nav>
+            <nav class="filter ustensils">
+                <input class="filter-input"  placeholder="Rechercher un ustensile" name="ustensil" title="ustensil" id="ustensil">
+                <label class="filter-label" for="ustensil">
+                    <span>Ustensiles</span>
+                    <img src="./src/svg/hat.svg" alt="hat toggle">
+                </label>
+            </nav>
+        
         </div>
     </header>
 </body>

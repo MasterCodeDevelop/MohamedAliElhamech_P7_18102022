@@ -1,0 +1,84 @@
+.filters {
+    display: flex;
+    gap: width(20);
+}
+.filter {
+    position: relative;
+    min-width: width(170);
+    min-height: width(69);
+    outline: none;
+    border: none;
+    border-radius: width(5);
+    &.ingredients {
+        background-color: $clr-blue;
+    }
+    &.appliances {
+        background-color: $clr-green;
+    }
+    &.ustensils {
+        background-color: $clr-orangered;
+    }
+    &-label {
+        cursor: pointer;
+        /*position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        cursor: pointer;
+        height: 100%;
+        width: 100%;*/
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            font-size: size(18);
+            color: $clr-white;
+            font-family: 'Lato';
+            font-weight: 700;
+            height: 100%;
+            width: 100%;
+            padding-block: width(23) width(22);
+            padding-left: width(23);
+        }
+        img {
+            position: absolute;
+            z-index: 1;
+            top: width(29.45);
+            right: width(18);
+            transition: transform .5s;
+        }
+    }
+    &-input {
+        max-width: 65%;
+        height: 22px;
+        font-size: size(18);
+        font-family: 'Lato';
+        font-weight: 700;
+        opacity: 0;
+        border: 0;
+        outline: 0;
+        margin: width(23) auto width(24) width(22);
+        color: $clr-white;
+        background-color: transparent;
+        &::placeholder {
+            color: $clr-white;
+            opacity: 0.5;
+        }
+    }
+    input:focus {
+        z-index: 1;
+        max-width: min-content;
+        padding-right: width(50);
+        opacity: 1;
+        & ~ .filter-label {
+            z-index: -10;
+            span {
+                display: none;
+            }
+            img {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}

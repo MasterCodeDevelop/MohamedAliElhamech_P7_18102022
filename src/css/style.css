@@ -110,6 +110,92 @@ body {
   height: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 
+.filters {
+  display: flex;
+  gap: calc(var(--res-width) * 20 * var(--ratio-width));
+}
+
+.filter {
+  position: relative;
+  min-width: calc(var(--res-width) * 170 * var(--ratio-width));
+  min-height: calc(var(--res-width) * 69 * var(--ratio-width));
+  outline: none;
+  border: none;
+  border-radius: calc(var(--res-width) * 5 * var(--ratio-width));
+}
+.filter.ingredients {
+  background-color: var(--clr-blue);
+}
+.filter.appliances {
+  background-color: var(--clr-green);
+}
+.filter.ustensils {
+  background-color: var(--clr-orangered);
+}
+.filter-label {
+  cursor: pointer;
+  /*position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;*/
+}
+.filter-label span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  font-size: calc(var(--res-width) * 18 * var(--ratio-size));
+  color: var(--clr-white);
+  font-family: "Lato";
+  font-weight: 700;
+  height: 100%;
+  width: 100%;
+  padding-block: calc(var(--res-width) * 23 * var(--ratio-width)) calc(var(--res-width) * 22 * var(--ratio-width));
+  padding-left: calc(var(--res-width) * 23 * var(--ratio-width));
+}
+.filter-label img {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--res-width) * 29.45 * var(--ratio-width));
+  right: calc(var(--res-width) * 18 * var(--ratio-width));
+  transition: transform 0.5s;
+}
+.filter-input {
+  max-width: 65%;
+  height: 22px;
+  font-size: calc(var(--res-width) * 18 * var(--ratio-size));
+  font-family: "Lato";
+  font-weight: 700;
+  opacity: 0;
+  border: 0;
+  outline: 0;
+  margin: calc(var(--res-width) * 23 * var(--ratio-width)) auto calc(var(--res-width) * 24 * var(--ratio-width)) calc(var(--res-width) * 22 * var(--ratio-width));
+  color: var(--clr-white);
+  background-color: transparent;
+}
+.filter-input::placeholder {
+  color: var(--clr-white);
+  opacity: 0.5;
+}
+.filter input:focus {
+  z-index: 1;
+  max-width: min-content;
+  padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
+  opacity: 1;
+}
+.filter input:focus ~ .filter-label {
+  z-index: -10;
+}
+.filter input:focus ~ .filter-label span {
+  display: none;
+}
+.filter input:focus ~ .filter-label img {
+  transform: rotate(180deg);
+}
+
 /*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/
 /*====================== header ======================*/
 .header-title {
