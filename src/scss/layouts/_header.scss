@@ -1,4 +1,11 @@
 /*====================== header ======================*/
+header {
+    margin-bottom: width(94);
+    &.filter__is-open {
+        margin-bottom: width(151);
+    }
+}
+
 .header-title {
     display: flex;
     flex-direction: column;

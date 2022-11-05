@@ -1,10 +1,13 @@
 .filters {
+    position: absolute;
     display: flex;
     gap: width(20);
 }
 .filter {
     position: relative;
     min-width: width(170);
+    max-width: width(667);
+    height: min-content;
     min-height: width(69);
     outline: none;
     border: none;
@@ -20,13 +23,6 @@
     }
     &-label {
         cursor: pointer;
-        /*position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        cursor: pointer;
-        height: 100%;
-        width: 100%;*/
         span {
             position: absolute;
             top: 0;
@@ -66,7 +62,7 @@
             opacity: 0.5;
         }
     }
-    input:focus {
+    .filter-input:focus, &.is-open .filter-input  {
         z-index: 1;
         max-width: min-content;
         padding-right: width(50);
@@ -80,5 +76,32 @@
                 transform: rotate(180deg);
             }
         }
+        & ~ .list {
+            display: flex;
+        }
     }
+    .list {
+        display: none;
+        list-style: none;
+        flex-wrap: wrap;
+        padding: width(16) width(19);
+        row-gap: width(10);
+        li {
+            cursor: pointer;
+            color: $clr-white;
+            width: width(209.6);
+            font-family: 'Lato';
+            font-weight: 400;
+            font-size: size(18);
+            transition: all .2s;
+        }
+        li:hover {
+            font-weight: 700;
+            text-shadow: 
+                -1px -1px 0px rgba(255, 255, 255, 0.3), 
+                3px 3px 0px rgba(255, 255, 255, 0.2), 
+                6px 6px 0px rgba(255, 255, 255, 0.1);
+        }
+    }
+
 }

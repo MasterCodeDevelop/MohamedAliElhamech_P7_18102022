@@ -111,6 +111,7 @@ body {
 }
 
 .filters {
+  position: absolute;
   display: flex;
   gap: calc(var(--res-width) * 20 * var(--ratio-width));
 }
@@ -118,6 +119,8 @@ body {
 .filter {
   position: relative;
   min-width: calc(var(--res-width) * 170 * var(--ratio-width));
+  max-width: calc(var(--res-width) * 667 * var(--ratio-width));
+  height: min-content;
   min-height: calc(var(--res-width) * 69 * var(--ratio-width));
   outline: none;
   border: none;
@@ -134,13 +137,6 @@ body {
 }
 .filter-label {
   cursor: pointer;
-  /*position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;*/
 }
 .filter-label span {
   position: absolute;
@@ -180,24 +176,54 @@ body {
   color: var(--clr-white);
   opacity: 0.5;
 }
-.filter input:focus {
+.filter .filter-input:focus, .filter.is-open .filter-input {
   z-index: 1;
   max-width: min-content;
   padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
   opacity: 1;
 }
-.filter input:focus ~ .filter-label {
+.filter .filter-input:focus ~ .filter-label, .filter.is-open .filter-input ~ .filter-label {
   z-index: -10;
 }
-.filter input:focus ~ .filter-label span {
+.filter .filter-input:focus ~ .filter-label span, .filter.is-open .filter-input ~ .filter-label span {
   display: none;
 }
-.filter input:focus ~ .filter-label img {
+.filter .filter-input:focus ~ .filter-label img, .filter.is-open .filter-input ~ .filter-label img {
   transform: rotate(180deg);
+}
+.filter .filter-input:focus ~ .list, .filter.is-open .filter-input ~ .list {
+  display: flex;
+}
+.filter .list {
+  display: none;
+  list-style: none;
+  flex-wrap: wrap;
+  padding: calc(var(--res-width) * 16 * var(--ratio-width)) calc(var(--res-width) * 19 * var(--ratio-width));
+  row-gap: calc(var(--res-width) * 10 * var(--ratio-width));
+}
+.filter .list li {
+  cursor: pointer;
+  color: var(--clr-white);
+  width: calc(var(--res-width) * 209.6 * var(--ratio-width));
+  font-family: "Lato";
+  font-weight: 400;
+  font-size: calc(var(--res-width) * 18 * var(--ratio-size));
+  transition: all 0.2s;
+}
+.filter .list li:hover {
+  font-weight: 700;
+  text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3), 3px 3px 0px rgba(255, 255, 255, 0.2), 6px 6px 0px rgba(255, 255, 255, 0.1);
 }
 
 /*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/
 /*====================== header ======================*/
+header {
+  margin-bottom: calc(var(--res-width) * 94 * var(--ratio-width));
+}
+header.filter__is-open {
+  margin-bottom: calc(var(--res-width) * 151 * var(--ratio-width));
+}
+
 .header-title {
   display: flex;
   flex-direction: column;
