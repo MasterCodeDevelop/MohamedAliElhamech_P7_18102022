@@ -1,0 +1,70 @@
+/*====================== card ======================*/
+.card {
+    background-color: $clr-grey;
+    width: width(380);
+    min-height: width(364);
+    border-radius: width(5);
+
+    &-thumb {
+        background-color: #C7BEBE;
+        width: 100%;
+        height: width(178);
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+    }
+    &-details {
+        display: flex;
+        flex-wrap: wrap;
+        padding: width(20);
+        row-gap: width(20);
+        &__title {
+            width: 100%;
+            display: flex;
+            color: $clr-black;
+            font-size: size(18);
+            line-height: width(22);
+            font-family: 'Lato';
+            font-style: normal;
+            h2 {
+                font-weight: 400;
+                width: 70%;
+                text-align: center;
+            }
+            strong {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: width(7);
+                width: 30%;
+                font-weight: 700;
+            }
+            img {
+                width: width(20);
+                height: width(20);
+            }
+        }
+        &__ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: width(4);
+            width: 50%;
+            font-family: 'Lato';
+            font-style: normal;
+            font-size: width(11.95);
+            line-height: width(14);
+            list-style: none;
+            strong {
+                font-weight: 700;
+            }
+        }
+        &__description {
+            width: 50%;
+            color: $clr-black;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: width(11.95);
+            line-height: 100%;
+        }
+    }
+}

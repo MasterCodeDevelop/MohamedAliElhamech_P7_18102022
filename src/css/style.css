@@ -110,6 +110,7 @@ body {
   height: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 
+/*====================== filters ======================*/
 .filters {
   position: absolute;
   display: flex;
@@ -215,13 +216,83 @@ body {
   text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3), 3px 3px 0px rgba(255, 255, 255, 0.2), 6px 6px 0px rgba(255, 255, 255, 0.1);
 }
 
+/*====================== card ======================*/
+.card {
+  background-color: var(--clr-grey);
+  width: calc(var(--res-width) * 380 * var(--ratio-width));
+  min-height: calc(var(--res-width) * 364 * var(--ratio-width));
+  border-radius: calc(var(--res-width) * 5 * var(--ratio-width));
+}
+.card-thumb {
+  background-color: #C7BEBE;
+  width: 100%;
+  height: calc(var(--res-width) * 178 * var(--ratio-width));
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.card-details {
+  display: flex;
+  flex-wrap: wrap;
+  padding: calc(var(--res-width) * 20 * var(--ratio-width));
+  row-gap: calc(var(--res-width) * 20 * var(--ratio-width));
+}
+.card-details__title {
+  width: 100%;
+  display: flex;
+  color: var(--clr-black);
+  font-size: calc(var(--res-width) * 18 * var(--ratio-size));
+  line-height: calc(var(--res-width) * 22 * var(--ratio-width));
+  font-family: "Lato";
+  font-style: normal;
+}
+.card-details__title h2 {
+  font-weight: 400;
+  width: 70%;
+  text-align: center;
+}
+.card-details__title strong {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--res-width) * 7 * var(--ratio-width));
+  width: 30%;
+  font-weight: 700;
+}
+.card-details__title img {
+  width: calc(var(--res-width) * 20 * var(--ratio-width));
+  height: calc(var(--res-width) * 20 * var(--ratio-width));
+}
+.card-details__ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: calc(var(--res-width) * 4 * var(--ratio-width));
+  width: 50%;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: calc(var(--res-width) * 11.95 * var(--ratio-width));
+  line-height: calc(var(--res-width) * 14 * var(--ratio-width));
+  list-style: none;
+}
+.card-details__ingredients strong {
+  font-weight: 700;
+}
+.card-details__description {
+  width: 50%;
+  color: var(--clr-black);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(var(--res-width) * 11.95 * var(--ratio-width));
+  line-height: 100%;
+}
+
 /*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/
 /*====================== header ======================*/
 header {
-  margin-bottom: calc(var(--res-width) * 94 * var(--ratio-width));
+  margin-bottom: calc(var(--res-width) * 114 * var(--ratio-width));
 }
 header.filter__is-open {
-  margin-bottom: calc(var(--res-width) * 151 * var(--ratio-width));
+  margin-bottom: calc(var(--res-width) * 171 * var(--ratio-width));
 }
 
 .header-title {
@@ -239,6 +310,14 @@ header.filter__is-open {
 
 .logo {
   width: calc(var(--res-width) * 50.48 * var(--ratio-width));
+}
+
+/*====================== recipes ======================*/
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: calc(var(--res-width) * 50 * var(--ratio-width));
 }
 
 /*# sourceMappingURL=style.css.map */
