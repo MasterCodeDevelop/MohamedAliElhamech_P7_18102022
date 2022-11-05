@@ -121,7 +121,7 @@ body {
   position: relative;
   min-width: calc(var(--res-width) * 170 * var(--ratio-width));
   max-width: calc(var(--res-width) * 667 * var(--ratio-width));
-  height: min-content;
+  height: calc(var(--res-width) * 69 * var(--ratio-width));
   min-height: calc(var(--res-width) * 69 * var(--ratio-width));
   outline: none;
   border: none;
@@ -163,6 +163,7 @@ body {
   transition: transform 0.5s;
 }
 .filter-input {
+  display: block;
   width: calc(var(--res-width) * 170 * var(--ratio-width));
   max-width: 65%;
   height: calc(var(--res-width) * 22 * var(--ratio-width));
@@ -180,23 +181,26 @@ body {
   color: var(--clr-white);
   opacity: 0.5;
 }
-.filter .filter-input:focus, .filter.is-open .filter-input {
+.filter.is-open {
+  height: min-content;
+}
+.filter.is-open .filter-input {
   width: auto;
   z-index: 1;
   max-width: min-content;
   padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
   opacity: 1;
 }
-.filter .filter-input:focus ~ .filter-label, .filter.is-open .filter-input ~ .filter-label {
+.filter.is-open .filter-label {
   z-index: -10;
 }
-.filter .filter-input:focus ~ .filter-label span, .filter.is-open .filter-input ~ .filter-label span {
+.filter.is-open .filter-label span {
   display: none;
 }
-.filter .filter-input:focus ~ .filter-label img, .filter.is-open .filter-input ~ .filter-label img {
+.filter.is-open .filter-label img {
   transform: rotate(180deg);
 }
-.filter .filter-input:focus ~ .list, .filter.is-open .filter-input ~ .list {
+.filter.is-open .list {
   display: flex;
 }
 .filter .list {
@@ -220,7 +224,7 @@ body {
 }
 .filter .list li:hover {
   font-weight: 700;
-  text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3), 3px 3px 0px rgba(255, 255, 255, 0.2), 6px 6px 0px rgba(255, 255, 255, 0.1);
+  text-shadow: calc(var(--res-width) * -1 * var(--ratio-width)) calc(var(--res-width) * -1 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.3), calc(var(--res-width) * 3 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.2), calc(var(--res-width) * 6 * var(--ratio-width)) calc(var(--res-width) * 6 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.1);
 }
 
 /*====================== card ======================*/
@@ -298,6 +302,12 @@ body {
   font-weight: 400;
   font-size: calc(var(--res-width) * 11.95 * var(--ratio-size));
   line-height: 100%;
+}
+
+.message-error {
+  color: red;
+  font-size: calc(var(--res-width) * 30 * var(--ratio-size));
+  font-weight: bold;
 }
 
 /*|||||||||||||||||||||| LAYOUTS ||||||||||||||||||||||*/

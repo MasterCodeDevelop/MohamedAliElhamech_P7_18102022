@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Après avoir édité des livres de cuisine pendant plusieurs années, l’entreprise 'Les petits plats' a décidé de se lancer dans un nouveau projet : réaliser son propre site de recettes de cuisine à l’instar de Marmiton ou 750g.",
   "scripts": {
-    "scss": "sass --watch  ./src/scss/index.scss:./src/css/style.css"
+    "scss": "sass --watch  ./src/scss/index.scss:./src/css/style.css",
+    "lint": "eslint --max-warnings=0 ."
   },
   "repository": {
     "type": "git",
@@ -14,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MasterCodeDevelop/MohamedAliElhamech_P7_18102022/issues"
   },
-  "homepage": "https://github.com/MasterCodeDevelop/MohamedAliElhamech_P7_18102022#readme"
+  "homepage": "https://github.com/MasterCodeDevelop/MohamedAliElhamech_P7_18102022#readme",
+  "devDependencies": {
+    "eslint": "^8.26.0"
+  }
 }
