@@ -1,4 +1,8 @@
 //====================== functions ======================//
+@function preciseWidth($width) {
+    $newWidth: calc($res-width * $width );
+    @return $newWidth;
+}
 @function width($width) {
     $newWidth: calc($res-width * $width * $ratio-width);
     @return $newWidth;

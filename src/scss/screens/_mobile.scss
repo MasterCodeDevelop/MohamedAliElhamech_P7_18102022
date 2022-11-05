@@ -1,0 +1,43 @@
+/*====================== mobile ======================*/
+@media screen and ( max-width: 425px) {
+    :root {
+        --ratio-size: 2;
+        --ratio-width: 1.75;
+    }
+    /*======= filters =======*/
+    .filters .list {
+        flex-direction: column;
+        flex-wrap: initial;
+        li {
+            width: 100%;
+        }
+    }
+
+    /*======= recipes =======*/
+    .recipes {
+        gap: preciseWidth(100);
+    }
+
+    /*======= card =======*/
+    .card {
+        width: 100%;
+        min-height: preciseWidth(1240);
+        &-thumb {
+            height: 40.34vw;
+        }
+        &-details {
+            padding: width(40);
+            row-gap: width(40);
+            &__title {
+                font-size: size(24);
+            }
+            &__ingredients {
+                row-gap: width(14);
+            }
+            &__ingredients, &__description {
+                font-size: size(18.95);
+            }
+        }
+    }
+
+}

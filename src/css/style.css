@@ -23,7 +23,7 @@
 }
 
 body {
-  padding: calc(var(--res-width) * 25 * var(--ratio-width)) calc(var(--res-width) * 100 * var(--ratio-width));
+  padding: calc(var(--res-width) * 25) calc(var(--res-width) * 100);
   font-family: "DM Sans";
 }
 
@@ -158,11 +158,14 @@ body {
   z-index: 1;
   top: calc(var(--res-width) * 29.45 * var(--ratio-width));
   right: calc(var(--res-width) * 18 * var(--ratio-width));
+  width: calc(var(--res-width) * 16 * var(--ratio-width));
+  height: calc(var(--res-width) * 9.89 * var(--ratio-width));
   transition: transform 0.5s;
 }
 .filter-input {
+  width: calc(var(--res-width) * 170 * var(--ratio-width));
   max-width: 65%;
-  height: 22px;
+  height: calc(var(--res-width) * 22 * var(--ratio-width));
   font-size: calc(var(--res-width) * 18 * var(--ratio-size));
   font-family: "Lato";
   font-weight: 700;
@@ -178,6 +181,7 @@ body {
   opacity: 0.5;
 }
 .filter .filter-input:focus, .filter.is-open .filter-input {
+  width: auto;
   z-index: 1;
   max-width: min-content;
   padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
@@ -201,6 +205,9 @@ body {
   flex-wrap: wrap;
   padding: calc(var(--res-width) * 16 * var(--ratio-width)) calc(var(--res-width) * 19 * var(--ratio-width));
   row-gap: calc(var(--res-width) * 10 * var(--ratio-width));
+  overflow-y: auto;
+  max-height: 32.04vh;
+  min-height: calc(var(--res-width) * 56 * var(--ratio-width));
 }
 .filter .list li {
   cursor: pointer;
@@ -220,8 +227,12 @@ body {
 .card {
   background-color: var(--clr-grey);
   width: calc(var(--res-width) * 380 * var(--ratio-width));
-  min-height: calc(var(--res-width) * 364 * var(--ratio-width));
+  min-height: width;
   border-radius: calc(var(--res-width) * 5 * var(--ratio-width));
+  cursor: pointer;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .card-thumb {
   background-color: #C7BEBE;
@@ -263,15 +274,18 @@ body {
   height: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 .card-details__ingredients {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   row-gap: calc(var(--res-width) * 4 * var(--ratio-width));
   width: 50%;
   font-family: "Lato";
   font-style: normal;
-  font-size: calc(var(--res-width) * 11.95 * var(--ratio-width));
+  font-size: calc(var(--res-width) * 11.95 * var(--ratio-size));
   line-height: calc(var(--res-width) * 14 * var(--ratio-width));
   list-style: none;
+}
+.card-details__ingredients li {
+  display: flex;
+  flex-wrap: wrap;
 }
 .card-details__ingredients strong {
   font-weight: 700;
@@ -282,7 +296,7 @@ body {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  font-size: calc(var(--res-width) * 11.95 * var(--ratio-width));
+  font-size: calc(var(--res-width) * 11.95 * var(--ratio-size));
   line-height: 100%;
 }
 
@@ -299,7 +313,6 @@ header.filter__is-open {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(var(--res-width) * 268 * var(--ratio-width));
   margin: calc(var(--res-width) * 17 * var(--ratio-width)) auto;
 }
 .header-title h1 {
@@ -318,6 +331,60 @@ header.filter__is-open {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: calc(var(--res-width) * 50 * var(--ratio-width));
+}
+
+/*|||||||||||||||||||||| SCREENS ||||||||||||||||||||||*/
+@media screen and (max-width: 768px) {
+  :root {
+    --ratio-size: 1.5;
+    --ratio-width: 1.5;
+  }
+  .recipes {
+    row-gap: calc(var(--res-width) * 100 * var(--ratio-width));
+  }
+  .card-details__ingredients, .card-details__description {
+    font-size: calc(var(--res-width) * 13 * var(--ratio-size));
+  }
+}
+/*====================== mobile ======================*/
+@media screen and (max-width: 425px) {
+  :root {
+    --ratio-size: 2;
+    --ratio-width: 1.75;
+  }
+  /*======= filters =======*/
+  .filters .list {
+    flex-direction: column;
+    flex-wrap: initial;
+  }
+  .filters .list li {
+    width: 100%;
+  }
+  /*======= recipes =======*/
+  .recipes {
+    gap: calc(var(--res-width) * 100);
+  }
+  /*======= card =======*/
+  .card {
+    width: 100%;
+    min-height: calc(var(--res-width) * 1240);
+  }
+  .card-thumb {
+    height: 40.34vw;
+  }
+  .card-details {
+    padding: calc(var(--res-width) * 40 * var(--ratio-width));
+    row-gap: calc(var(--res-width) * 40 * var(--ratio-width));
+  }
+  .card-details__title {
+    font-size: calc(var(--res-width) * 24 * var(--ratio-size));
+  }
+  .card-details__ingredients {
+    row-gap: calc(var(--res-width) * 14 * var(--ratio-width));
+  }
+  .card-details__ingredients, .card-details__description {
+    font-size: calc(var(--res-width) * 18.95 * var(--ratio-size));
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

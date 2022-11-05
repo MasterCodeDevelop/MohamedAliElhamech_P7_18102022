@@ -1,0 +1,13 @@
+//====================== tablet ======================//
+@media screen and ( max-width: 768px) {
+    :root {
+        --ratio-size: 1.5;
+        --ratio-width: 1.5;
+    }
+    .recipes {
+        row-gap: width(100);
+    }
+    .card-details__ingredients, .card-details__description {
+        font-size: size(13);
+    }
+}

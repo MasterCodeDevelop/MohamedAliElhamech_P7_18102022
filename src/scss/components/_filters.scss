@@ -43,12 +43,15 @@
             z-index: 1;
             top: width(29.45);
             right: width(18);
+            width: width(16);
+            height: width(9.89);
             transition: transform .5s;
         }
     }
     &-input {
+        width: width(170);
         max-width: 65%;
-        height: 22px;
+        height: width(22);
         font-size: size(18);
         font-family: 'Lato';
         font-weight: 700;
@@ -64,6 +67,7 @@
         }
     }
     .filter-input:focus, &.is-open .filter-input  {
+        width: auto;
         z-index: 1;
         max-width: min-content;
         padding-right: width(50);
@@ -87,6 +91,9 @@
         flex-wrap: wrap;
         padding: width(16) width(19);
         row-gap: width(10);
+        overflow-y: auto;
+        max-height: 32.04vh;
+        min-height: width(56);
         li {
             cursor: pointer;
             color: $clr-white;
