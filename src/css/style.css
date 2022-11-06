@@ -23,6 +23,9 @@
 }
 
 body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
   padding: calc(var(--res-width) * 25) calc(var(--res-width) * 100);
   font-family: "DM Sans";
 }
@@ -231,7 +234,7 @@ body {
 .card {
   background-color: var(--clr-grey);
   width: calc(var(--res-width) * 380 * var(--ratio-width));
-  min-height: width;
+  min-height: calc(var(--res-width) * 364 * var(--ratio-width));
   border-radius: calc(var(--res-width) * 5 * var(--ratio-width));
   cursor: pointer;
 }
@@ -337,8 +340,7 @@ header.filter__is-open {
 .recipes {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  row-gap: calc(var(--res-width) * 50 * var(--ratio-width));
+  gap: calc(var(--res-width) * 50 * var(--ratio-width));
 }
 
 /*|||||||||||||||||||||| SCREENS ||||||||||||||||||||||*/
@@ -346,9 +348,6 @@ header.filter__is-open {
   :root {
     --ratio-size: 1.5;
     --ratio-width: 1.5;
-  }
-  .recipes {
-    row-gap: calc(var(--res-width) * 100 * var(--ratio-width));
   }
   .card-details__ingredients, .card-details__description {
     font-size: calc(var(--res-width) * 13 * var(--ratio-size));

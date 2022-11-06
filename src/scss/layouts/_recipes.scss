@@ -2,6 +2,5 @@
 .recipes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: width(50);
+    gap: width(50);
 }
