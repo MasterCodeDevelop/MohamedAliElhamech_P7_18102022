@@ -21,6 +21,7 @@
         padding: width(20);
         row-gap: width(20);
         &__title {
+            position: relative;
             width: 100%;
             display: flex;
             color: $clr-black;
@@ -30,20 +31,17 @@
             font-style: normal;
             h2 {
                 font-weight: 400;
-                width: 70%;
+                width: 80%;
                 text-align: center;
-            }
-            strong {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: width(7);
-                width: 30%;
-                font-weight: 700;
             }
             img {
                 width: width(20);
                 height: width(20);
+            }
+            strong {
+                padding-left: width(7);
+                width: 20%;
+                font-weight: 700;
             }
         }
         &__ingredients {

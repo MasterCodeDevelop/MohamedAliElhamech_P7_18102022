@@ -252,6 +252,7 @@ body {
   row-gap: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 .card-details__title {
+  position: relative;
   width: 100%;
   display: flex;
   color: var(--clr-black);
@@ -262,20 +263,17 @@ body {
 }
 .card-details__title h2 {
   font-weight: 400;
-  width: 70%;
+  width: 80%;
   text-align: center;
-}
-.card-details__title strong {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: calc(var(--res-width) * 7 * var(--ratio-width));
-  width: 30%;
-  font-weight: 700;
 }
 .card-details__title img {
   width: calc(var(--res-width) * 20 * var(--ratio-width));
   height: calc(var(--res-width) * 20 * var(--ratio-width));
+}
+.card-details__title strong {
+  padding-left: calc(var(--res-width) * 7 * var(--ratio-width));
+  width: 20%;
+  font-weight: 700;
 }
 .card-details__ingredients {
   display: grid;

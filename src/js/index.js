@@ -10,11 +10,12 @@ const recipes = document.getElementById('recipes');
  */
 async function init() {
 	try {
-		const dataRecipes = await getRecipes()
+		const dataRecipes = await getRecipes();
 		console.log(dataRecipes)
 	
 	} catch (error) {
-		const messageError = getCloneTemplate('message-fetch-error');
+		// Display a error message in the main main page
+		const messageError = getCloneTemplate('template-message-fetch-error');
 		recipes.innerHTML = '';
 		recipes.append(messageError);
 	}
