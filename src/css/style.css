@@ -122,6 +122,7 @@ body {
 
 .filter {
   position: relative;
+  z-index: 10;
   min-width: calc(var(--res-width) * 170 * var(--ratio-width));
   max-width: calc(var(--res-width) * 667 * var(--ratio-width));
   height: calc(var(--res-width) * 69 * var(--ratio-width));
@@ -140,9 +141,16 @@ body {
   background-color: var(--clr-orangered);
 }
 .filter-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
 }
-.filter-label span {
+.filter-label::before {
+  content: attr(data-value);
   position: absolute;
   top: 0;
   left: 0;
@@ -152,18 +160,21 @@ body {
   font-family: "Lato";
   font-weight: 700;
   height: 100%;
-  width: 100%;
-  padding-block: calc(var(--res-width) * 23 * var(--ratio-width)) calc(var(--res-width) * 22 * var(--ratio-width));
+  display: flex;
+  align-items: center;
   padding-left: calc(var(--res-width) * 23 * var(--ratio-width));
 }
-.filter-label img {
+.filter-label::after {
+  content: "";
   position: absolute;
-  z-index: 1;
-  top: calc(var(--res-width) * 29.45 * var(--ratio-width));
+  top: calc(var(--res-width) * 29.5 * var(--ratio-width));
   right: calc(var(--res-width) * 18 * var(--ratio-width));
-  width: calc(var(--res-width) * 16 * var(--ratio-width));
-  height: calc(var(--res-width) * 9.89 * var(--ratio-width));
-  transition: transform 0.5s;
+  width: calc(var(--res-width) * 8 * var(--ratio-width));
+  height: calc(var(--res-width) * 8 * var(--ratio-width));
+  border-bottom: 3px solid var(--clr-white);
+  border-right: 3px solid var(--clr-white);
+  transform: rotate(45deg);
+  transition: 0.5s;
 }
 .filter-input {
   display: block;
@@ -184,27 +195,14 @@ body {
   color: var(--clr-white);
   opacity: 0.5;
 }
-.filter.is-open {
-  height: min-content;
-}
-.filter.is-open .filter-input {
-  width: auto;
-  z-index: 1;
-  max-width: min-content;
-  padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
-  opacity: 1;
-}
-.filter.is-open .filter-label {
-  z-index: -10;
-}
-.filter.is-open .filter-label span {
+.filter-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
   display: none;
-}
-.filter.is-open .filter-label img {
-  transform: rotate(180deg);
-}
-.filter.is-open .list {
-  display: flex;
 }
 .filter .list {
   display: none;
@@ -228,6 +226,35 @@ body {
 .filter .list li:hover {
   font-weight: 700;
   text-shadow: calc(var(--res-width) * -1 * var(--ratio-width)) calc(var(--res-width) * -1 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.3), calc(var(--res-width) * 3 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.2), calc(var(--res-width) * 6 * var(--ratio-width)) calc(var(--res-width) * 6 * var(--ratio-width)) 0 rgba(255, 255, 255, 0.1);
+}
+.filter.is-open {
+  height: min-content;
+  z-index: 100;
+}
+.filter.is-open::after {
+  display: block;
+}
+.filter.is-open .filter-input {
+  width: auto;
+  z-index: 1;
+  max-width: min-content;
+  padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
+  opacity: 1;
+}
+.filter.is-open .filter-label {
+  z-index: -10;
+}
+.filter.is-open .filter-label::before {
+  display: none;
+}
+.filter.is-open .filter-label::after {
+  transform: rotate(225deg);
+}
+.filter.is-open .filter-close {
+  display: block;
+}
+.filter.is-open .list {
+  display: flex;
 }
 
 /*====================== card ======================*/

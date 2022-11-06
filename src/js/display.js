@@ -3,7 +3,10 @@ import { getCloneTemplate } from './get.js';
 
 /*###################### CONST ######################*/
 const search = document.getElementById('search'),
-recipes = document.getElementById('recipes');
+recipes = document.getElementById('recipes'),
+filtersLabel = document.getElementsByClassName('filter-label'),
+filtersClose = document.getElementsByClassName('filter-close');
+
 
 /*###################### VAR ######################*/
 var data, filteredRecipes;
@@ -48,7 +51,7 @@ function filterRecipes(value) {
  * Displays all the recipes given in the data Recipes parm
  * @param {Array} dataRecipes 
  */
-export function displayRecipes(dataRecipes) {
+function displayRecipes(dataRecipes) {
     recipes.innerHTML = '';
     for (const dataRecipe of dataRecipes) displayRecipe(dataRecipe);
 }
@@ -80,11 +83,41 @@ function displayRecipe(data) {
     /*######### APPEND #########*/
     recipes.appendChild(recipe)
 }
+/**
+ * Close the select filter
+ * @param {Element} nav 
+ */
+function closeFilter(nav) {
+    nav.classList.remove('is-open');
+}
+/**
+ * Displays all elements for all filters
+ */
+function displayFilters() {
+    for (const label of filtersLabel) {
+        label.addEventListener('click', e => {
+            const parentElement = e.target.parentElement;
+            parentElement.classList.add('is-open');
+        });
+    }
+    for (const close of filtersClose) {
+        close.addEventListener('click', e =>closeFilter(e.target.parentElement));
+    }
+}
+
+
+
+
+
+
+
+
 /*###################### EXPORT ######################*/
 export function display(dataRecipes) {
     data = dataRecipes;
 
     displayRecipes(data);
+    displayFilters();
 
     /*########### EventListener ###########*/
     search.addEventListener('input', searchRecipes)

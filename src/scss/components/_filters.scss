@@ -6,6 +6,7 @@
 }
 .filter {
     position: relative;
+    z-index: 10;
     min-width: width(170);
     max-width: width(667);
     height: width(69);
@@ -23,8 +24,15 @@
         background-color: $clr-orangered;
     }
     &-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
         cursor: pointer;
-        span {
+        &::before {
+            content: attr(data-value);
             position: absolute;
             top: 0;
             left: 0;
@@ -34,18 +42,21 @@
             font-family: 'Lato';
             font-weight: 700;
             height: 100%;
-            width: 100%;
-            padding-block: width(23) width(22);
+            display: flex;
+            align-items: center;
             padding-left: width(23);
         }
-        img {
+        &::after {
+            content: "";
             position: absolute;
-            z-index: 1;
-            top: width(29.45);
+            top: width(29.5);
             right: width(18);
-            width: width(16);
-            height: width(9.89);
-            transition: transform .5s;
+            width: width(8);
+            height: width(8);
+            border-bottom: 3px solid $clr-white;
+            border-right: 3px solid $clr-white;
+            transform: rotate(45deg);
+            transition: 0.5s;
         }
     }
     &-input {
@@ -67,30 +78,15 @@
             opacity: 0.5;
         }
     }
-    &.is-open {
-        height: min-content;
-        .filter-input {
-            width: auto;
-            z-index: 1;
-            max-width: min-content;
-            padding-right: width(50);
-            opacity: 1;
-        }
-        .filter-label {
-            z-index: -10;
-            span {
-                display: none;
-            }
-            img {
-                transform: rotate(180deg);
-            }
-        }
-        .list {
-            display: flex;
-        }
-        
+    &-close {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100vw;
+        height: 100vh;
+        display: none;
     }
-
     .list {
         display: none;
         list-style: none;
@@ -115,6 +111,37 @@
                 width(-1) width(-1) 0 rgba(255, 255, 255, 0.3), 
                 width(3) 0 rgba(255, 255, 255, 0.2), 
                 width(6) width(6) 0 rgba(255, 255, 255, 0.1);
+        }
+    }
+    &.is-open {
+        height: min-content;
+        z-index: 100;
+        &::after {
+            display: block;
+        }
+        .filter {
+            &-input {
+                width: auto;
+                z-index: 1;
+                max-width: min-content;
+                padding-right: width(50);
+                opacity: 1;
+            }
+            &-label {
+                z-index: -10;
+                &::before {
+                    display: none;
+                }
+                &::after {
+                    transform: rotate(225deg);
+                }
+            }
+            &-close {
+                display: block;
+            }
+        }
+        .list {
+            display: flex;
         }
     }
 
