@@ -136,7 +136,6 @@ const sort = ($tags) => {
  * update all tags in their filter beds
  */
 function updateFilters() {
-        
     for (const filter of filters) {
         // CONST 
         const id = filter.querySelector('input').id,
@@ -149,18 +148,53 @@ function updateFilters() {
             parentElement.classList.add('is-open');
         });
         close.addEventListener('click', e =>closeFilter(e.target.parentElement));
+        updateTags({id, list});
 
-        for (const tag of sortedTags[id]) {
-            const li = document.createElement('li');
-            li.textContent = tag;
-            list.appendChild(li);            
-        }
     }
 }
-
-
-
-
+/**
+ * update the new tags in the list
+ * @param {string} id 
+ * @param {element} list 
+ */
+function updateTags({id, list}) {
+    list.innerHTML = '';
+    for (const tag of sortedTags[id]) {
+        const li = document.createElement('li');
+        li.textContent = tag;
+        list.appendChild(li);            
+    }
+}
+/**
+ * if the input is filled,  search the tags
+ * @param {*} e event handling.
+ */
+function searchTags(e) {
+    const id = e.target.id,
+    value = e.target.value.toLowerCase();
+    if(!value || !value.length) {
+        sortedTags[id] = tags[id];
+    } else {
+        sortedTags[id] = filterTags(value, tags[id]);
+    }
+    
+    const list = e.target.parentElement.querySelector('ul');
+    updateTags({id, list});
+    
+}
+/**
+ * searches for tags that include search input
+ * @param {string} value 
+ * @param {array} tags 
+ * @returns {array} tags is filtred
+ */
+function filterTags(value, tags) {
+    let $tags = [];
+    for (const tag of tags) {
+        if (tag.includes(value)) $tags.push(tag);
+    }
+    return $tags;
+}
 
 
 
@@ -175,5 +209,9 @@ export function display(dataRecipes) {
 
     /*########### EventListener ###########*/
     search.addEventListener('input', searchRecipes)
+    for (const filter of filters) {
+        const input = filter.querySelector('input');
+        input.addEventListener('input', searchTags)
+    }
  
 }
