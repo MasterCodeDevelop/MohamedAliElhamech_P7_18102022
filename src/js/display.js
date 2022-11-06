@@ -4,12 +4,11 @@ import { getCloneTemplate } from './get.js';
 /*###################### CONST ######################*/
 const search = document.getElementById('search'),
 recipes = document.getElementById('recipes'),
-filtersLabel = document.getElementsByClassName('filter-label'),
-filtersClose = document.getElementsByClassName('filter-close');
+filters = document.getElementsByClassName('filter');
 
 
 /*###################### VAR ######################*/
-var data, filteredRecipes;
+var data, filteredRecipes, tags = {}, sortedTags = {};
 
 /*###################### FUNCTION ######################*/
 
@@ -94,16 +93,71 @@ function closeFilter(nav) {
  * Displays all elements for all filters
  */
 function displayFilters() {
-    for (const label of filtersLabel) {
+    resetTags()
+    updateFilters()
+}
+/**
+ * reset all tags and sort them well
+ */
+function resetTags() {
+    // sort ingredients
+    const ingredientsRecipes = data.map((recipe) => recipe.ingredients),
+    ingredientsTags = ingredientsRecipes.map(([{ ingredient }]) => ingredient);
+    tags.ingredient = sort(ingredientsTags);
+    sortedTags.ingredient = sort(ingredientsTags);
+
+    // sort appliance
+    const applianceTags = data.map((recipe) => recipe.appliance);
+    tags.appliance = sort(applianceTags);
+    sortedTags.appliance = sort(applianceTags);
+
+    // sort ustensils
+    const ustensilsRecipes = data.map((recipe) => recipe.ustensils),
+    ustensilsTags = ustensilsRecipes.map(([ustensil]) => ustensil).sort((a, b) => a.localeCompare(b));
+    tags.ustensil = sort(ustensilsTags);
+    sortedTags.ustensil = sort(ustensilsTags);
+}
+/**
+ * sorts the tags so as not to have several same tags
+ * @param {array} $tags 
+ * @returns {array} tags sorted
+ */
+const sort = ($tags) => {
+    let newTags = [];
+    for (const tag of $tags) {
+        const index = newTags.indexOf(tag.toLowerCase());
+        if (index == -1) {
+            newTags.push(tag.toLowerCase());
+        }
+    }
+    return newTags
+}
+/**
+ * update all tags in their filter beds
+ */
+function updateFilters() {
+        
+    for (const filter of filters) {
+        // CONST 
+        const id = filter.querySelector('input').id,
+        label = filter.querySelector('label'),
+        close = filter.querySelector('span'),
+        list = filter.querySelector('ul');
+        
         label.addEventListener('click', e => {
             const parentElement = e.target.parentElement;
             parentElement.classList.add('is-open');
         });
-    }
-    for (const close of filtersClose) {
         close.addEventListener('click', e =>closeFilter(e.target.parentElement));
+
+        for (const tag of sortedTags[id]) {
+            const li = document.createElement('li');
+            li.textContent = tag;
+            list.appendChild(li);            
+        }
     }
 }
+
 
 
 
