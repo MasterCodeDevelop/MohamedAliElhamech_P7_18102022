@@ -1,5 +1,9 @@
+/*###################### IMPORTS ######################*/
+import { getCloneTemplate } from './get.js';
+
 /*###################### CONST ######################*/
-const search = document.getElementById('search');
+const search = document.getElementById('search'),
+recipes = document.getElementById('recipes');
 
 /*###################### VAR ######################*/
 var data, filteredRecipes;
@@ -18,7 +22,7 @@ function searchRecipes(e) {
     } else {
         filteredRecipes = filterRecipes(value);
     }
-    console.log(filteredRecipes);
+    displayRecipes(filteredRecipes);
 
 }
 /**
@@ -40,10 +44,47 @@ function filterRecipes(value) {
     }
     return recipes;
 }
+/**
+ * Displays all the recipes given in the data Recipes parm
+ * @param {Array} dataRecipes 
+ */
+export function displayRecipes(dataRecipes) {
+    recipes.innerHTML = '';
+    for (const dataRecipe of dataRecipes) displayRecipe(dataRecipe);
+}
+/**
+ * Adds the recipe with its own data
+ * @param {Object} data 
+ */
+function displayRecipe(data) {
+    /*######### CONST #########*/
+    const { name, time, ingredients, description } = data,
+    recipe = getCloneTemplate('template-recipe-card'),
+    h2 = recipe.querySelector('h2'),
+    strong = recipe.querySelector('strong'),
+    ul = recipe.querySelector('ul'),
+    p = recipe.querySelector('p');
 
+    /*######### UPDATE #########*/
+    h2.textContent = name; // title
+    strong.textContent = time+' min' // time
+    ingredients.forEach(ing => {
+        const { ingredient, quantity, unit } = ing;
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${ingredient}:&nbsp;</strong> ${unit?quantity+unit:quantity}`;
+        ul.appendChild(li);
+    }); // ingredients
+    p.textContent = description; //description
+    
+
+    /*######### APPEND #########*/
+    recipes.appendChild(recipe)
+}
 /*###################### EXPORT ######################*/
 export function display(dataRecipes) {
     data = dataRecipes;
+
+    displayRecipes(data);
 
     /*########### EventListener ###########*/
     search.addEventListener('input', searchRecipes)
