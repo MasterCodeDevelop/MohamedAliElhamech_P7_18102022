@@ -1,5 +1,6 @@
 /*###################### IMPORTS ######################*/
-import { getRecipes, getCloneTemplate } from './functions.js';
+import { getRecipes, getCloneTemplate } from './get.js';
+import { display } from './display.js';
 
 /*###################### CONST ######################*/
 const recipes = document.getElementById('recipes');
@@ -11,7 +12,7 @@ const recipes = document.getElementById('recipes');
 async function init() {
 	try {
 		const dataRecipes = await getRecipes();
-		console.log(dataRecipes)
+		display(dataRecipes);
 	
 	} catch (error) {
 		// Display a error message in the main main page
