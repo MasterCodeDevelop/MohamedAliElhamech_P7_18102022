@@ -171,8 +171,8 @@ body {
   right: calc(var(--res-width) * 18 * var(--ratio-width));
   width: calc(var(--res-width) * 8 * var(--ratio-width));
   height: calc(var(--res-width) * 8 * var(--ratio-width));
-  border-bottom: 3px solid var(--clr-white);
-  border-right: 3px solid var(--clr-white);
+  border-bottom: calc(var(--res-width) * 3 * var(--ratio-width)) solid var(--clr-white);
+  border-right: calc(var(--res-width) * 3 * var(--ratio-width)) solid var(--clr-white);
   transform: rotate(45deg);
   transition: 0.5s;
 }
@@ -194,15 +194,6 @@ body {
 .filter-input::placeholder {
   color: var(--clr-white);
   opacity: 0.5;
-}
-.filter-close {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100vw;
-  height: 100vh;
-  display: none;
 }
 .filter .list {
   display: none;
@@ -236,22 +227,22 @@ body {
 }
 .filter.is-open .filter-input {
   width: auto;
-  z-index: 1;
   max-width: min-content;
   padding-right: calc(var(--res-width) * 50 * var(--ratio-width));
   opacity: 1;
 }
 .filter.is-open .filter-label {
-  z-index: -10;
+  z-index: 1;
+  width: 20%;
+  height: calc(var(--res-width) * 69 * var(--ratio-width));
+  right: 0;
+  margin-left: 80%;
 }
 .filter.is-open .filter-label::before {
   display: none;
 }
 .filter.is-open .filter-label::after {
   transform: rotate(225deg);
-}
-.filter.is-open .filter-close {
-  display: block;
 }
 .filter.is-open .list {
   display: flex;

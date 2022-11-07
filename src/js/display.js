@@ -4,11 +4,13 @@ import { getCloneTemplate } from './get.js';
 /*###################### CONST ######################*/
 const search = document.getElementById('search'),
 recipes = document.getElementById('recipes'),
-filters = document.getElementsByClassName('filter');
+filters = document.getElementsByClassName('filter'),
+tagsHTML = document.getElementById('tags');
 
 
 /*###################### VAR ######################*/
-var data, filteredRecipes, tags = {}, sortedTags = {};
+var data, filteredRecipes, tags = {}, sortedTags = {}, 
+tagsSelected = {ingredient:[], appliance:[], ustensil:[]};
 
 /*###################### FUNCTION ######################*/
 
@@ -83,13 +85,6 @@ function displayRecipe(data) {
     recipes.appendChild(recipe)
 }
 /**
- * Close the select filter
- * @param {Element} nav 
- */
-function closeFilter(nav) {
-    nav.classList.remove('is-open');
-}
-/**
  * Displays all elements for all filters
  */
 function displayFilters() {
@@ -140,14 +135,17 @@ function updateFilters() {
         // CONST 
         const id = filter.querySelector('input').id,
         label = filter.querySelector('label'),
-        close = filter.querySelector('span'),
         list = filter.querySelector('ul');
         
         label.addEventListener('click', e => {
-            const parentElement = e.target.parentElement;
-            parentElement.classList.add('is-open');
+            const parentElement = e.target.parentElement,
+            lastOpen = document.querySelector('.filter.is-open');
+
+            if(lastOpen && lastOpen != parentElement) {
+                lastOpen.classList.remove('is-open')
+            }
+            parentElement.classList.toggle('is-open');
         });
-        close.addEventListener('click', e =>closeFilter(e.target.parentElement));
         updateTags({id, list});
 
     }
@@ -159,11 +157,19 @@ function updateFilters() {
  */
 function updateTags({id, list}) {
     list.innerHTML = '';
-    for (const tag of sortedTags[id]) {
-        const li = document.createElement('li');
-        li.textContent = tag;
-        list.appendChild(li);            
-    }
+    for (const tag of sortedTags[id]) createItem({id, tag, list});
+}
+/**
+ * create a new item and add it to the list with its filter given in the id.
+ * @param {String} id (ingredient or appliance or ustensil)
+ * @param {String} tag is the name Tag
+ * @param {Element} list
+ */
+function createItem({id, tag, list}) {
+    const li = document.createElement('li');
+    li.textContent = tag;
+    li.addEventListener('click', e => addTag({e, id}))
+    list.appendChild(li);   
 }
 /**
  * if the input is filled,  search the tags
@@ -195,7 +201,37 @@ function filterTags(value, tags) {
     }
     return $tags;
 }
+/**
+ * Add the tag with dom
+ * @param {Event} e event handling.
+ * @param {string} id (ingredient or appliance or ustensil)
+ */
+function addTag({ e, id }) {
+    // CONST
+    const value = e.target.textContent,
+    list = e.target.parentElement,
+    newTag = getCloneTemplate('template-tag'),
+    title = newTag.querySelector('span'),
+    close = newTag.querySelector('button'),
+    index = tags[id].indexOf(value.toLowerCase());
 
+    newTag.classList.add(id);
+    title.textContent = value;
+    close.addEventListener('click', () => {
+        const index = tagsSelected[id].indexOf(value.toLowerCase()),
+        tag = value;
+
+        tagsSelected[id].splice(index,1)
+        tags[id].push(tag.toLowerCase());
+        newTag.remove();
+        createItem({id, tag, list});
+    });
+
+    tags[id].splice(index,1)
+    tagsSelected[id].push(value.toLowerCase());
+    e.target.remove();
+    tagsHTML.appendChild(newTag);
+}
 
 
 

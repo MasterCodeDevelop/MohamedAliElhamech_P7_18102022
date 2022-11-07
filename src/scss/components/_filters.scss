@@ -53,8 +53,8 @@
             right: width(18);
             width: width(8);
             height: width(8);
-            border-bottom: 3px solid $clr-white;
-            border-right: 3px solid $clr-white;
+            border-bottom: width(3) solid $clr-white;
+            border-right: width(3) solid $clr-white;
             transform: rotate(45deg);
             transition: 0.5s;
         }
@@ -77,15 +77,6 @@
             color: $clr-white;
             opacity: 0.5;
         }
-    }
-    &-close {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100vw;
-        height: 100vh;
-        display: none;
     }
     .list {
         display: none;
@@ -122,22 +113,22 @@
         .filter {
             &-input {
                 width: auto;
-                z-index: 1;
                 max-width: min-content;
                 padding-right: width(50);
                 opacity: 1;
             }
             &-label {
-                z-index: -10;
+                z-index: 1;
+                width: 20%;
+                height: width(69);
+                right: 0;
+                margin-left: 80%;
                 &::before {
                     display: none;
                 }
                 &::after {
                     transform: rotate(225deg);
                 }
-            }
-            &-close {
-                display: block;
             }
         }
         .list {
