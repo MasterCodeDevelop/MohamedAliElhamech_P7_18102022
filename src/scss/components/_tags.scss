@@ -19,6 +19,7 @@
     span {
         font-size: size(14);
         font-weight: 700;
+        text-transform: capitalize;
     }
     &.ingredient {
         background-color: $clr-blue;
