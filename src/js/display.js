@@ -24,7 +24,11 @@ function searchRecipes() {
     if((!value || !value.length) && !filteredRecipes) {
         filteredRecipes = data;
     } else {
-        filteredRecipes = filterRecipes(value);
+        filterRecipesByTags();
+        if(value.length > 2) {
+            filteredRecipes = filterRecipes(value);
+            updateTags();
+        }
     }
     displayRecipes(filteredRecipes);
 
@@ -36,7 +40,7 @@ function searchRecipes() {
  */
 function filterRecipes(value) {
     let recipes = [];
-    for (const recipe of data) {
+    for (const recipe of filteredRecipes) {
 
         const name = recipe.name.toLowerCase(),
         description = recipe.description.toLowerCase(),
@@ -80,87 +84,85 @@ function displayRecipe(data) {
     }); // ingredients
     p.textContent = description; //description
     
-
     /*######### APPEND #########*/
     recipes.appendChild(recipe)
 }
 /**
  * Displays all elements for all filters
  */
-function displayFilters() {
-    resetTags()
-    updateFilters()
+function displayFilters(filter) {
+    // CONST 
+    const input = filter.querySelector('input'),
+    label = filter.querySelector('label');
+
+    // EventListener
+    input.addEventListener('input', searchTags)
+    label.addEventListener('click', e => {
+        const parentElement = e.target.parentElement,
+        lastOpen = document.querySelector('.filter.is-open');
+
+        if(lastOpen && lastOpen != parentElement) {
+            lastOpen.classList.remove('is-open')
+        }
+        parentElement.classList.toggle('is-open');
+    });
+    
 }
 /**
  * reset all tags and sort them well
  */
 function resetTags() {
+    let ingredientsTags = [], applianceTags = [], ustensilsTags = [];
+    // reset data
     if(!filteredRecipes) filteredRecipes = data;
-    // sort ingredients
-    const ingredientsRecipes = filteredRecipes.map((recipe) => recipe.ingredients),
-    ingredientsTags = ingredientsRecipes.map(([{ ingredient }]) => ingredient);
-    tags.ingredient = sort(ingredientsTags);
-    sortedTags.ingredient = sort(ingredientsTags);
-
-    // sort appliance
-    const applianceTags = filteredRecipes.map((recipe) => recipe.appliance);
-    tags.appliance = sort(applianceTags);
-    sortedTags.appliance = sort(applianceTags);
-
-    // sort ustensils
-    const ustensilsRecipes = filteredRecipes.map((recipe) => recipe.ustensils),
-    ustensilsTags = ustensilsRecipes.map(([ustensil]) => ustensil).sort((a, b) => a.localeCompare(b));
-    tags.ustensil = sort(ustensilsTags);
-    sortedTags.ustensil = sort(ustensilsTags);
+    // filtres
+    filteredRecipes.map( ({ ingredients, appliance, ustensils }) => {
+        ingredients.map(
+            ({ingredient}) => sort(ingredient, ingredientsTags)
+        )
+        sort(appliance, applianceTags)
+        ustensils.map(
+            (ustensil) => sort(ustensil, ustensilsTags)
+        )
+    });
+    // Sort by Alphabetically
+    ingredientsTags.sort( (a, b) =>  a.localeCompare(b));
+    applianceTags.sort( (a, b) =>  a.localeCompare(b));
+    ustensilsTags.sort( (a, b) =>  a.localeCompare(b));
+    // reset tags
+    tags = {
+        ingredient: ingredientsTags,
+        appliance: applianceTags,
+        ustensil: ustensilsTags
+    }
+    sortedTags = tags;
 }
 /**
- * sorts the tags so as not to have several same tags
- * @param {array} $tags 
- * @returns {array} tags sorted
+ * sorts the tags 
+ * @param {String} tag
+ * @param {Array} data
  */
-const sort = ($tags) => {
-    let newTags = [];
-    for (const tag of $tags) {
-        const index = newTags.indexOf(tag.toLowerCase());
-        if (index == -1) {
-            newTags.push(tag.toLowerCase());
-        }
+function sort(tag, data) {
+    const index =  data.indexOf(tag.toLowerCase());
+    if (index == -1) {
+        data.push(tag.toLowerCase());
     }
-    return newTags
-}
-/**
- * update all tags in their filter beds
- */
-function updateFilters() {
-    for (const filter of filters) {
-        // CONST 
-        const label = filter.querySelector('label');
-        
-        label.addEventListener('click', e => {
-            const parentElement = e.target.parentElement,
-            lastOpen = document.querySelector('.filter.is-open');
-
-            if(lastOpen && lastOpen != parentElement) {
-                lastOpen.classList.remove('is-open')
-            }
-            parentElement.classList.toggle('is-open');
-        });
-    }
-    updateTags();
 }
 /**
  * update the new tags in the list
  * @param {string} id 
  * @param {element} list 
  */
-function updateTags() {
+ function updateTags() {
+    resetTags();
+
     for (const filter of filters) {
         // CONST 
         const id = filter.querySelector('input').id,
         list = filter.querySelector('ul');
 
         list.innerHTML = '';
-        resetTags();
+
         for (const tag of sortedTags[id]) createItem({id, tag, list});
     }
 }
@@ -170,8 +172,9 @@ function updateTags() {
  * @param {String} tag is the name Tag
  * @param {Element} list
  */
-function createItem({id, tag, list}) {
-    const index = tagsSelected[id].indexOf(tag.toLowerCase()),
+function createItem({id, tag}) {
+    const list = document.getElementById(id+'List'),
+    index = tagsSelected[id].indexOf(tag.toLowerCase()),
     li = document.createElement('li');
 
     if (index == -1) {
@@ -186,15 +189,17 @@ function createItem({id, tag, list}) {
  * @param {*} e event handling.
  */
 function searchTags(e) {
+    // Const
     const id = e.target.id,
-    value = e.target.value.toLowerCase();
+    value = e.target.value.toLowerCase(),
+    list = e.target.parentElement.querySelector('ul');
+    // filter tags
     if(!value || !value.length) {
         sortedTags[id] = tags[id];
     } else {
         sortedTags[id] = filterTags(value, tags[id]);
     }
-    
-    const list = e.target.parentElement.querySelector('ul');
+    // update items
     list.innerHTML = '';
     for (const tag of sortedTags[id]) createItem({id, tag, list});
     
@@ -220,59 +225,79 @@ function filterTags(value, tags) {
 function addTag({ e, id }) {
     // CONST
     const value = e.target.textContent,
+    nav = e.target.parentElement.parentElement,
+    input = nav.querySelector('input'),
     newTag = getCloneTemplate('template-tag'),
     title = newTag.querySelector('span'),
     close = newTag.querySelector('button');
 
+    
+    nav.classList.remove('is-open');// close the dropdown
+    input.value = ''; // reset the input tag search
     newTag.classList.add(id);
     title.textContent = value;
     close.addEventListener('click', () => {
         const index = tagsSelected[id].indexOf(value.toLowerCase());
-
-        tagsSelected[id].splice(index,1)
+  
+        tagsSelected[id].splice(index,1);
         newTag.remove();
-        filteredRecipes = data;
-        filterRecipesByTags(id);
+        
+        // update reccipes
+        filterRecipesByTags();
+        searchRecipes();
+
     });
 
     tagsSelected[id].push(value.toLowerCase());
     tagsHTML.appendChild(newTag);
-    filterRecipesByTags(id)
+
+    // update reccipes
+    filterRecipesByTags();
+    searchRecipes();
+
 }
 /**
  * filters the recipes and sends the elements that are found an array
  * @param {string} value 
  * @returns {Array} recipes -> the new recipes (filtred)
  */
- function filterRecipesByTags(id) {
-    if(!filteredRecipes || filterRecipes.length == 0 || tagsSelected[id].length ===0) filteredRecipes = data;
+ function filterRecipesByTags() {
+    // reset
+    filteredRecipes = data;
+    resetTags();
 
-    for (const tag of tagsSelected[id]) {
-        filteredRecipes = sortTags(tag.toLowerCase(), id, filteredRecipes);
-    }
-    displayRecipes(filteredRecipes)
+    // update
+    sortTags('ingredient');
+    sortTags('appliance');
+    sortTags('ustensil');
     updateTags();
+    
+    // display
+    displayRecipes(filteredRecipes)
 }
-function sortTags(value, id, data) {
-    let recipes = [];
+/**
+ * 
+ * @param {*} value 
+ * @param {*} id 
+ * @param {*} data 
+ * @returns 
+ */
+function sortTags(id) {
+    
+    for (const value of tagsSelected[id]) {
 
-    if(id == 'ingredient') {
-        for (const recipe of data) {
-            const findIngredients = recipe.ingredients.find((ing) => ing.ingredient.toLowerCase().includes(value));
-            if(findIngredients) recipes.push(recipe);
+        let recipes = [];
+        for (const recipe of filteredRecipes) {
+            const isRecipe = 
+                (id == 'ingredient')?   recipe.ingredients.find((ing) => ing.ingredient.toLowerCase().includes(value))
+                :(id == 'appliance')?   recipe.appliance.toLowerCase().includes(value)
+                :/*ustensil*/           recipe.ustensils.find((ustensil) => ustensil.toLowerCase().includes(value));
+                
+            if(isRecipe) recipes.push(recipe);
         }
-    }else if(id == 'appliance') {
-        for (const recipe of data) {
-            const findAppliance = recipe.appliance.toLowerCase().includes(value);
-            if(findAppliance) recipes.push(recipe);
-        }
-    }else if(id == 'ustensil') {
-        for (const recipe of data) {
-            const findUstensil = recipe.ustensils.find((ustensil) => ustensil.toLowerCase().includes(value));
-            if(findUstensil) recipes.push(recipe);
-        }
+        filteredRecipes = recipes;
     }
-    return recipes
+
 }
 
 /*###################### EXPORT ######################*/
@@ -280,14 +305,11 @@ export function display(dataRecipes) {
     data = dataRecipes;
 
     displayRecipes(data);
-    displayFilters();
+    updateTags()
 
     /*########### EventListener ###########*/
     search.addEventListener('input', searchRecipes);
     searchLabel.addEventListener('click', searchRecipes);
-    for (const filter of filters) {
-        const input = filter.querySelector('input');
-        input.addEventListener('input', searchTags)
-    }
+    for (const filter of filters)  displayFilters(filter);
  
 }
