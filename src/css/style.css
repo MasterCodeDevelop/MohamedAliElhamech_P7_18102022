@@ -108,6 +108,7 @@ body {
   border: none;
   outline: none;
   cursor: pointer;
+  background-color: transparent;
 }
 .tag-remove, .tag-remove__icon {
   width: calc(var(--res-width) * 20 * var(--ratio-width));
@@ -326,6 +327,7 @@ body {
 }
 
 .message-error {
+  margin: auto;
   color: red;
   font-size: calc(var(--res-width) * 30 * var(--ratio-size));
   font-weight: bold;
