@@ -10,16 +10,16 @@ const recipes = document.getElementById('recipes');
  * Init the page and display all élements
  */
 async function init() {
-	//try {
+	try {
 		const dataRecipes = await getRecipes();
 		display(dataRecipes);
 	
-	/*} catch (error) {
+	} catch (error) {
 		// Display a error message in the main main page
 		const messageError = getCloneTemplate('template-message-fetch-error');
 		recipes.innerHTML = '';
 		recipes.append(messageError);
-	}*/
+	}
 }
 /*###################### EXECUT ######################*/
 init();
