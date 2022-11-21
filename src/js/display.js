@@ -39,13 +39,12 @@ function searchBar() {
  */
 function filterRecipes(value) {
     let recipes = [];
-    for (let i = 0; i < filteredRecipes.length; i++) {
-        const recipe = filteredRecipes[i],
-        { name, description, ingredients } = recipe;
+    filteredRecipes.forEach(recipe => {
+        const { name, description, ingredients } = recipe;
         if (isIncludes(name, value) || ingredients.find(({ingredient}) => isIncludes(ingredient, value)) || isIncludes(description, value) ) {
             recipes.push(recipe);
         } 
-    }
+    });
     return recipes;
 }
 /**
