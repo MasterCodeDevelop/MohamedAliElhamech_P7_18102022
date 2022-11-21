@@ -318,7 +318,6 @@ function filteredByTag(id) {
  * @returns Boolean
  */
 function isIncludes(e, value) {
-    console.log(e)
     return e.toLowerCase().includes(value.toLowerCase())
 }
 

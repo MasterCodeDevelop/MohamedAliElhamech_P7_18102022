@@ -7,14 +7,19 @@
     gap: 5px;
 	border-radius: 5px;
 	font-family: 'Lato';
-    padding: width(24);
     height: width(69);
     margin-bottom: width(20);
 
 }
 .search {
+    &-label, &-input {
+        height: 100%;
+        padding: width(24);
+    }
     &-label {
-        display: contents;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
         &__magnifying-glass {
             position: absolute;
@@ -30,8 +35,7 @@
         background-color: transparent;
         outline: none;
         border: none;
-        width: 100%;
-        height: width(22);
+        width: calc(100% - width(50));
         &::placeholder {
             opacity: 0.25;
         }

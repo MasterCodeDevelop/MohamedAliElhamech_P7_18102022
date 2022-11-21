@@ -40,13 +40,18 @@ body {
   gap: 5px;
   border-radius: 5px;
   font-family: "Lato";
-  padding: calc(var(--res-width) * 24 * var(--ratio-width));
   height: calc(var(--res-width) * 69 * var(--ratio-width));
   margin-bottom: calc(var(--res-width) * 20 * var(--ratio-width));
 }
 
+.search-label, .search-input {
+  height: 100%;
+  padding: calc(var(--res-width) * 24 * var(--ratio-width));
+}
 .search-label {
-  display: contents;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 .search-label__magnifying-glass {
@@ -62,8 +67,7 @@ body {
   background-color: transparent;
   outline: none;
   border: none;
-  width: 100%;
-  height: calc(var(--res-width) * 22 * var(--ratio-width));
+  width: calc(100% - var(--res-width) * 50 * var(--ratio-width));
 }
 .search-input::placeholder {
   opacity: 0.25;
