@@ -5,7 +5,7 @@ import { getCloneTemplate } from './get.js';
 const search = document.getElementById('search'),
 searchLabel = document.getElementById('searchLabel'),
 recipes = document.getElementById('recipes'),
-filters = document.getElementsByClassName('filter'),
+filters = document.getElementById('filters').children,
 tagsHTML = document.getElementById('tags');
 
 
@@ -19,7 +19,7 @@ tagsSelected = {ingredient:[], appliance:[], ustensil:[]};
  * if the input is filled,  search the recipes
  */
 function searchBar() {
-    const value = search.value.toLowerCase();
+    const {value} = search;
 
     if((!value.length || value.length < 3) && !filteredRecipes) {
         filteredRecipes = data;
@@ -39,15 +39,12 @@ function searchBar() {
  */
 function filterRecipes(value) {
     let recipes = [];
-    for (const recipe of filteredRecipes) {
-
-        const name = recipe.name.toLowerCase(),
-        description = recipe.description.toLowerCase(),
-        findIngredients = recipe.ingredients.find((ing) => ing.ingredient.toLowerCase().includes(value));
-        
-        if (name.includes(value) || findIngredients|| description.includes(value)) {
+    for (let i = 0; i < filteredRecipes.length; i++) {
+        const recipe = filteredRecipes[i],
+        { name, description, ingredients } = recipe;
+        if (isIncludes(name, value) || ingredients.find(({ingredient}) => isIncludes(ingredient, value)) || isIncludes(description, value) ) {
             recipes.push(recipe);
-        }
+        } 
     }
     return recipes;
 }
@@ -69,9 +66,9 @@ function displayRecipes(dataRecipes) {
     }
 
     /*######### UPDATE AND DISPLAY RECIPES #########*/
-    for (const data of dataRecipes) {
+    for (let i = 0;i < dataRecipes.length; i++) {
         // CONST
-        const { name, time, ingredients, description } = data,
+        const { name, time, ingredients, description } = dataRecipes[i],
         recipe = getCloneTemplate('template-recipe-card'),
         h2 = recipe.querySelector('h2'),
         strong = recipe.querySelector('strong'),
@@ -81,12 +78,12 @@ function displayRecipes(dataRecipes) {
         // UPDATE
         h2.textContent = name; // title
         strong.textContent = time+' min' // time
-        ingredients.forEach(ing => {
-            const { ingredient, quantity, unit } = ing;
+        for (let i = 0; i < ingredients.length; i++) {
+            const { ingredient, quantity, unit } = ingredients[i];
             const li = document.createElement('li');
             li.innerHTML = `<strong>${ingredient}:&nbsp;</strong> ${unit?quantity+unit:quantity}`;
             ul.appendChild(li);
-        }); // ingredients
+        } // ingredients
         p.textContent = description; //description
         
         // APPEND
@@ -125,37 +122,46 @@ function resetTags() {
     if(!filteredRecipes) filteredRecipes = data;
         
     /*######### FILTERS #########*/
-    filteredRecipes.map( ({ ingredients, appliance, ustensils }) => {
-        ingredients.map(
-            ({ingredient}) => sort(ingredient, ingredientsTags)
-        )
-        sort(appliance, applianceTags)
-        ustensils.map(
-            (ustensil) => sort(ustensil, ustensilsTags)
-        )
-    });
-
-    /*######### SORT BY ALPHABETICALLY #########*/
-    ingredientsTags.sort( (a, b) =>  a.localeCompare(b));
-    applianceTags.sort( (a, b) =>  a.localeCompare(b));
-    ustensilsTags.sort( (a, b) =>  a.localeCompare(b));
+    for (let i = 0; i < filteredRecipes.length; i++) {
+        const { ingredients, appliance, ustensils } = filteredRecipes[i];
+        // ingredients
+        for (let i = 0; i < ingredients.length; i++) {
+            singleAdd(ingredients[i].ingredient, ingredientsTags);
+        }
+        // appliance
+        singleAdd(appliance, applianceTags);
+        //ustensil
+        for (let i = 0; i < ustensils.length; i++) {
+            singleAdd(ustensils[i], ustensilsTags);
+        }
+    }
 
     /*######### UPDATE tags/sortedTags #########*/
     tags = {
-        ingredient: ingredientsTags,
-        appliance: applianceTags,
-        ustensil: ustensilsTags
+        ingredient: ingredientsTags.sort(sortByLetter),
+        appliance: applianceTags.sort(sortByLetter),
+        ustensil: ustensilsTags.sort(sortByLetter)
     }
     sortedTags = tags;
+}
+/**
+ * returns a number indicating whether a reference string comes before, or after, 
+ * or is the same as the given string in sort order.
+ * @param {String} a 
+ * @param {String} b 
+ * @returns {String}
+ */
+function sortByLetter(a,b) {
+    return a.localeCompare(b)
 }
 /**
  * sorts the tags 
  * @param {String} tag
  * @param {Array} data
  */
-function sort(tag, data) {
-    const index =  data.indexOf(tag.toLowerCase());
-    if (index == -1) data.push(tag.toLowerCase());
+function singleAdd(tag, data) {
+    const value = tag.toLowerCase();
+    if (!data.includes(value)) data.push(value);
 }
 /**
  * update the new tags in the filters list
@@ -163,13 +169,15 @@ function sort(tag, data) {
  function updateTags() {
     resetTags();
 
-    for (const filter of filters) {
+    for (let i = 0; i < filters.length; i++) {
         /*######### CONST #########*/
-        const id = filter.querySelector('input').id,
-        list = filter.querySelector('ul');
+        const id = filters[i].querySelector('input').id,
+        list = filters[i].querySelector('ul');
 
-        list.innerHTML = '';// RESET LIST 
-        for (const tag of sortedTags[id]) createItem({id, tag, list});// UPDATE TAGS LIST
+        // RESET LIST
+        list.innerHTML = ''; 
+        // UPDATE TAGS LIST
+        for (let i = 0; i < sortedTags[id].length; i++) createItem(id, sortedTags[id][i], list);
     }
 }
 /**
@@ -178,7 +186,7 @@ function sort(tag, data) {
  * @param {String} tag is the name Tag
  * @param {Element} list
  */
-function createItem({id, tag, list }) {
+function createItem(id, tag, list ) {
     /*######### CONST #########*/
     const index = tagsSelected[id].indexOf(tag.toLowerCase()),
     li = document.createElement('li');
@@ -189,7 +197,6 @@ function createItem({id, tag, list }) {
         li.addEventListener('click', e => addTag({e, id}));
         list.appendChild(li);   
     }
-
 }
 /**
  * if the input is filled,  search the tags
@@ -197,32 +204,30 @@ function createItem({id, tag, list }) {
  */
 function searchTags(e) {
     /*######### CONST #########*/
-    const id = e.target.id,
-    value = e.target.value.toLowerCase(),
+    const { id, value } = e.target,
     list = document.getElementById(id+'List');
     
     /*######### FILTER TAGS #########*/
-    sortedTags[id] = (!value || !value.length)
+    const sort = (!value || !value.length)
     ?   tags[id]
     :   filterTags(value, tags[id]);
-    
+
     /*######### UPDATE ITEMS #########*/
     list.innerHTML = '';
-    for (const tag of sortedTags[id]) createItem({id, tag, list});
-    
+    for (let i = 0; i < sort.length; i++) createItem(id, sort[i], list);
 }
 /**
  * searches for tags that include search input
- * @param {string} value 
- * @param {array} tags 
+ * @param {string} value
+ * @param {array} tags
  * @returns {array} tags is filtred
  */
 function filterTags(value, tags) {
-    let $tags = [];
-    for (const tag of tags) {
-        if (tag.includes(value)) $tags.push(tag);
+    let sortTags = [];
+    for (let i = 0; i < tags.length; i++) {
+        if (isIncludes(tags[i], value)) sortTags.push(tags[i]);
     }
-    return $tags;
+    return sortTags;
 }
 /**
  * Add the tag with dom
@@ -244,7 +249,7 @@ function addTag({ e, id }) {
     /*######### UPDATE ELEMENT #########*/
     newTag.classList.add(id);
     title.textContent = value;
-    close.addEventListener('click', e => closeTag({e, id, value}));
+    close.addEventListener('click', e => removeTag({e, id, value}));
 
     /*######### UPDATE RECIPES #########*/
     tagsHTML.appendChild(newTag);
@@ -259,7 +264,7 @@ function addTag({ e, id }) {
  * @param {string} id (ingredient or appliance or ustensil)
  * @param {string} value  tag name
  */
-function closeTag({e, id, value}) {
+function removeTag({e, id, value}) {
     const index = tagsSelected[id].indexOf(value.toLowerCase());
 
     tagsSelected[id].splice(index,1);
@@ -289,20 +294,32 @@ function closeTag({e, id, value}) {
  * @param {string} id (ingredient or appliance or ustensil)
  */
 function filteredByTag(id) {
-    
-    for (const value of tagsSelected[id]) {
+    for (let i = 0; i < tagsSelected[id].length; i++) {
+        const value = tagsSelected[id][i];
         let recipes = [];
-        for (const recipe of filteredRecipes) {
+        for (let i = 0; i < filteredRecipes.length; i++) {
+            const recipe = filteredRecipes[i],
+            { ingredients, appliance, ustensils} = recipe;
+            
             const isRecipe = 
-                (id == 'ingredient')?   recipe.ingredients.find((ing) => ing.ingredient.toLowerCase().includes(value))
-                :(id == 'appliance')?   recipe.appliance.toLowerCase().includes(value)
-                :/*ustensil*/           recipe.ustensils.find((ustensil) => ustensil.toLowerCase().includes(value));
+                (id == 'ingredient')?   ingredients.find(({ingredient}) => isIncludes(ingredient, value) )
+                :(id == 'appliance')?   isIncludes(appliance, value)
+                :/*ustensil*/           ustensils.find(e => isIncludes(e, value) );
                 
             if(isRecipe) recipes.push(recipe);
         }
         filteredRecipes = recipes;
     }
-
+}
+/**
+ * determines whether a string (value) contains the given characters (e) within it or not.
+ * @param {String} e 
+ * @param {String} value 
+ * @returns Boolean
+ */
+function isIncludes(e, value) {
+    console.log(e)
+    return e.toLowerCase().includes(value.toLowerCase())
 }
 
 /*###################### EXPORT ######################*/
@@ -315,6 +332,5 @@ export function display(dataRecipes) {
     /*########### EventListener ###########*/
     search.addEventListener('input', searchBar);
     searchLabel.addEventListener('click', searchBar);
-    for (const filter of filters)  displayFilters(filter);
- 
+    for (let i = 0; i < filters.length; i++) displayFilters(filters[i]);
 }
